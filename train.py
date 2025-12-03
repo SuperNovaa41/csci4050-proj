@@ -40,7 +40,7 @@ features = features.astype(float)
 features = torch.tensor(features.values, dtype=torch.float32)
 targets = torch.tensor(df['Survived'].values, dtype=torch.float32).unsqueeze(1)
 
-dataset = TensorDataset(features, targets)
+dataset = TensorDataset(features)
 dataloader = DataLoader(dataset, batch_size=len(features), shuffle=True)
 input_dim = features.shape[1]
 
@@ -62,19 +62,13 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
 num_epochs = 1000
 
-bce = nn.BCELoss()
-
 for epoch in range(num_epochs):
     total_loss = 0
-    for x, y in dataloader:
-        x = x.to(device)
-        y = y.to(device)
+    for x in dataloader:
+        x = x[0].to(device)
 
-        x_hat, y_hat = model(x)
-        ae_loss = loss_fn(x_hat, x)
-        cls_loss = bce(y_hat, y)
-
-        loss = ae_loss + cls_loss
+        x_hat = model(x)
+        loss = loss_fn(x_hat, x)
 
         optimizer.zero_grad()
         loss.backward()

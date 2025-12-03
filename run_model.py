@@ -17,8 +17,8 @@ model.eval()
 inp = torch.tensor(input_tens, dtype=torch.float32)
 with torch.no_grad():
     x = inp.to("cpu")
-    _, preds = model(x)
-    preds = (preds > 0.5).float()
-    print(preds)
+    #_, preds = model(x)
+    #preds = (preds > 0.5).float()
+    #print(preds)
 
 
