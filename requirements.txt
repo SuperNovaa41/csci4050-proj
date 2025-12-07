@@ -5,3 +5,4 @@ torch
 torchinfo
 torchmetrics
 kagglehub[pandas-dataset]
+pillow
