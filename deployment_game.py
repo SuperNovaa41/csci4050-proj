@@ -115,15 +115,15 @@ class MyApp(tk.Frame):
 
         # For rules label
         rules = """
-        The sinking of the Titanic in 1912 was a tragic event that took hundreds of lives.
+The sinking of the Titanic in 1912 was a tragic event that took hundreds of lives.
 
-        It turns out that many factors influenced whether someone would survive the crash.
+It turns out that many factors influenced whether someone would survive the crash.
 
-        You will be introduced to former passengers of the Titanic. You will listen to their stories, investigate the scene, and determine whether you think they would survive the crash.
+You will be introduced to former passengers of the Titanic. You will listen to their stories, investigate the scene, and determine whether you think they would survive the crash.
 
 
-        This is a Machine Learning game. Your guess will be run through a trained ML Model.
-        The model will decide whether you are correct, based on its training data.
+This is a Machine Learning game. Your guess will be run through a trained ML Model.
+The model will decide whether you are correct, based on its training data.
         """
 
         self.page_container.columnconfigure(0,weight=0)
@@ -147,10 +147,10 @@ class MyApp(tk.Frame):
         author_txt = tk.Label(self.page_container, text="Olly Love, Nathan Singer, David Kelly", font=("Helvetica", 15), fg="white",bg="#217fdd")
         author_txt.grid(row=1,column=1)
         rule_btn = tk.Button(self.page_container, text="Rules", font=("Helvetica", 15), fg="white", bg="#217fdd")
-        rule_btn.grid(row=2,column=0,sticky="e")
+        rule_btn.grid(row=2,column=0,sticky="w")
         # FORMAT ERROR - Why not going on the left?
         rule_txt = tk.Label(self.page_container, text=rules, font=("Helvetica", 12),fg="white",bg="#217fdd",wraplength=400,anchor="e",justify="left")
-        rule_txt.grid(row=3,column=0,sticky="w")
+        rule_txt.grid(row=3,column=0,sticky="e")
         # Change scenes
         start_btn = tk.Button(self.page_container, text="Start", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
         start_btn.grid(row=4,column=1)
