@@ -11,10 +11,11 @@ class MyApp(tk.Frame):
 
         self.current_page_index = 0
         self.pages = [self.create_page_container, self.hint_page, self.game_page1, self.game_page2,self.game_page3,self.game_page4,self.game_page5]
-        self.score = 0
+        self.total_score = 0
         # These switch when user clicks yes or no buttons
         self.no_button = 0
         self.yes_button = 0
+        self.current_features = []
 
         super().__init__(
             root
@@ -52,23 +53,27 @@ class MyApp(tk.Frame):
             # Gives value within preds tensor
             print(preds.item())
             return preds.item()
-        
-    def no_btn_clicked(self):
-        self.no_button = 1
 
-    def yes_btn_clicked(self):
-        self.yes_button = 1
-
-    def score(self,features):
-        correct = self.ml_evaluate(features)
+    def score(self):
+        correct = self.ml_evaluate(self.current_features)
         # If user clicks yes or no, if there geuss matches correct, give them a point
         # Will add a score page as well displaying after each
         if self.no_button == 1 and correct == 0:
-            self.score += 1
+            self.total_score += 1
             self.no_button = 0
+            print("Correct")
         elif self.yes_button == 1 and correct == 1:
-            self.score += 1
+            self.total_score += 1
             self.yes_button = 0
+            print("Correct")
+
+    def no_btn_clicked(self):
+        self.no_button = 1
+        self.score()
+
+    def yes_btn_clicked(self):
+        self.yes_button = 1
+        self.score()
 
     # Container for whole page - set up right amount of columns and rows for titles
     # Authors, rules label, rules text box, and start button, with background image
@@ -183,7 +188,7 @@ class MyApp(tk.Frame):
         # Didn't Survive - PassengerId = 1, info from dataset + made up details on top
         # related to the dataset info
         # Copy and pasted feature vector for this passenger
-        features = [0,3,0,22.000000,1,0,7.2500,0,0,0,0,0,0,0,0,1,0,0,1]
+        self.current_features = [3,0,22.000000,1,0,7.2500,0,0,0,0,0,0,0,0,1,0,0,1]
         story = """
         Story 1:
         Hi, I'm Mr. Owen Harris Braund. I heard about the Titanic all over the news
@@ -214,9 +219,12 @@ class MyApp(tk.Frame):
         yes_btn.grid(row=2,column=2,sticky="s")
 
         # Evaluates users score checking with ML model
-        self.score(features)
+        if self.no_button == 1 or self.yes_button == 1:
+            self.score(features)
         
-
+        score_txt = tk.Label(self.page_container,text="Score: " + str(self.total_score), font=("Helvetica", 12),fg="white",bg="#217fdd")
+        score_txt.grid(row=3, column=1,sticky="w")
+        
         next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
         next_btn.grid(row=3,column=2,sticky="se")
     
