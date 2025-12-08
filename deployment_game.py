@@ -1,8 +1,8 @@
 # Machine Learning Final Project Model Deployment
 # Titanic Survival Geussing Game
 # User will be met with a story from a titanic passenger
-# They make a geuss whether that person survived
-# The geuss is validated with an MLP Machine Learning model
+# They make a guess whether that person survived
+# The guess is validated with an MLP Machine Learning model
 
 import tkinter as tk
 
@@ -116,12 +116,14 @@ class MyApp(tk.Frame):
         # For rules label
         rules = """
         The sinking of the Titanic in 1912 was a tragic event that took hundreds of lives.
+
         It turns out that many factors influenced whether someone would survive the crash.
-        You will be introduced to former passengers of the Titanic. You
-        will listen to their stories, investigate the scene, and determine whether
-        you think they would survive the crash.
-        This is a Machine Learning game. Your geuss will be run through a trained ML Model.
-        This model will decide whether you are correct, based on its training data.
+
+        You will be introduced to former passengers of the Titanic. You will listen to their stories, investigate the scene, and determine whether you think they would survive the crash.
+
+
+        This is a Machine Learning game. Your guess will be run through a trained ML Model.
+        The model will decide whether you are correct, based on its training data.
         """
 
         self.page_container.columnconfigure(0,weight=0)
@@ -145,9 +147,9 @@ class MyApp(tk.Frame):
         author_txt = tk.Label(self.page_container, text="Olly Love, Nathan Singer, David Kelly", font=("Helvetica", 15), fg="white",bg="#217fdd")
         author_txt.grid(row=1,column=1)
         rule_btn = tk.Button(self.page_container, text="Rules", font=("Helvetica", 15), fg="white", bg="#217fdd")
-        rule_btn.grid(row=2,column=0,sticky="w")
+        rule_btn.grid(row=2,column=0,sticky="e")
         # FORMAT ERROR - Why not going on the left?
-        rule_txt = tk.Label(self.page_container, text=rules, font=("Helvetica", 12),fg="white",bg="#217fdd",wraplength=400,anchor="w",justify="left")
+        rule_txt = tk.Label(self.page_container, text=rules, font=("Helvetica", 12),fg="white",bg="#217fdd",wraplength=400,anchor="e",justify="left")
         rule_txt.grid(row=3,column=0,sticky="w")
         # Change scenes
         start_btn = tk.Button(self.page_container, text="Start", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
@@ -182,7 +184,7 @@ class MyApp(tk.Frame):
         continue_btn.grid(row=1,column=1, sticky="s")
 
     # First page of game, displaying passengers portrait,
-    # story, geussing buttons, and button to advance game to the next page
+    # story, guessing buttons, and button to advance game to the next page
     def game_page1(self):
         self.page_container = tk.Frame(
             self.main_frame,
@@ -204,14 +206,16 @@ class MyApp(tk.Frame):
         self.current_features = [3,0,22.000000,1,0,7.2500,0,0,0,0,0,0,0,0,1,0,0,1]
         story = """
         Story 1:
-        Hi, I'm Mr. Owen Harris Braund. I heard about the Titanic all over the news
-        and just had to go. I worked extra hours as a server to make just enough
-        for a 3rd class ticket. Its hard finding work at my age as I'm only 22, not
-        many people want to hire someone like me, especially with no university education.
+        Hi, I'm Mr. Owen Harris Braund.
+
+        I heard about the Titanic all over the news and just had to go.
+
+        I worked extra hours as a server to make just enough for a 3rd class ticket. Its hard finding work at my age as I'm only 22, not many people want to hire someone like me, especially with no university education.
+
         I worked very hard to be here, I even managed to grab an extra ticket for my brother Lewis.
-        I see all these families around, I'm so grateful I don't have any kids to look
-        after, that seems like a tough job. Though, some of those families are living on
-        the upper decks, I'm in a shared cabin at the bottom of the ship.
+
+        I see all these families around, I'm so grateful I don't have any kids to look after, that seems like a tough job. Though, some of those families are living on the upper decks, I'm in a shared cabin at the bottom of the ship.
+
         Theres always a compromise, but I'm enjoying my time here anyways.
         """
 
@@ -254,10 +258,12 @@ class MyApp(tk.Frame):
         self.current_features = [3,1,26.000000,0,0,7.9250,0,0,0,0,0,0,0,0,1,0,0,1]
         story = """
         Story 2:
-        How do you do? My names Miss. Laina Heikkinen. As you can tell, I'm not married.
-        In fact I'm here all alone. My grandma gifted me a ticket here for my birthday.
-        We aren't wealthy so I'm staying in a shared cabin on the lower decks, but
-        it doesn't matter, its such a beautiful ship and I'm having a great time.
+        How do you do? My names Miss. Laina Heikkinen.
+
+        As you can tell, I'm not married. In fact I'm here all alone. My grandma gifted me a ticket here for my birthday.
+
+        We aren't wealthy so I'm staying in a shared cabin on the lower decks, but it doesn't matter, its such a beautiful ship and I'm having a great time.
+
         I can't wait to tell my family all about the experience!
         """
 
@@ -299,12 +305,12 @@ class MyApp(tk.Frame):
         story = """
         Story 3:
         Hello, I'm Mr. Charles Eugene Williams, but you can call me Charles.
-        I'm taking a vacation from my ungrateful family, I work so hard, buy them
-        tons of nice things, but all they do is complain. I heard about the Titanic
-        on the news and quickly bought this 2nd class ticket, all the first class
-        ones were sold out, or I woulda bought 2, one for me, and one for my bags.
-        I'm close enough to all the amenities on the top floor, so I don't mind being
-        where I am.
+
+        I'm taking a vacation from my ungrateful family, I work so hard, buy them tons of nice things, but all they do is complain.
+
+        I heard about the Titanic on the news and quickly bought this 2nd class ticket, all the first class ones were sold out, or I woulda bought 2, one for me, and one for my bags.
+
+        I'm close enough to all the amenities on the top floor, so I don't mind being where I am.
         """
 
         # Titanic man 3
@@ -345,9 +351,15 @@ class MyApp(tk.Frame):
         self.current_features = [2,1,3,1,2,41.5792,0,0,0,0,0,0,0,0,1,1,0,0]
         story = """
         Story 4:
-        Goo goo ga ga. I'm Miss. Simone Marie Anne Andree Laroche! I'm only 3! My parents
-        are amazing and buy me tons of nice things!
-        Like this 2nd class ticket to the Titanic! This ship is amazing!
+        Goo goo ga ga.
+
+        I'm Miss. Simone Marie Anne Andree Laroche!
+
+        I'm only 3!
+
+        My parents are amazing and buy me tons of nice things, like this 2nd class ticket to the Titanic!
+
+        This ship is amazing!
         """
 
         self.portrait = ImageTk.PhotoImage(Image.open("imgs/titanicbaby.jpg").resize((450, 600), Image.Resampling.LANCZOS))
@@ -386,10 +398,12 @@ class MyApp(tk.Frame):
         self.current_features = [3,1,33,3,0,15.85,0,0,0,0,0,0,0,0,1,0,0,1]
         story = """
         Story 5:
-        Well hey there, my names Mrs. Karl Alfred. My husband thought it would be nice to surprise
-        the family with Titanic tickets, so here we are. Our quarters are cramped, but its a fabulous
-        ship with tons to do. If only the kid didn't keep running away, at least were getting
-        good exercise.
+        Well hey there, my names Mrs. Karl Alfred.
+
+        My husband thought it would be nice to surprise the family with Titanic tickets, so here we are.
+
+        Our quarters are cramped, but its a fabulous ship with tons to do.
+        If only the kid didn't keep running away, but, at least were getting good exercise.
         """
 
         self.portrait = ImageTk.PhotoImage(Image.open("imgs/titanicmom.jpg").resize((450, 600), Image.Resampling.LANCZOS))
