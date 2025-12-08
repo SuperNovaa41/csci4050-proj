@@ -8,7 +8,7 @@ class MyApp(tk.Frame):
     def __init__(self, root):
 
         self.current_page_index = 0
-        self.pages = [self.create_page_container, self.hint_page, self.game_page1]
+        self.pages = [self.create_page_container, self.hint_page, self.game_page1, self.game_page2,self.game_page3,self.game_page4,self.game_page5]
 
         super().__init__(
             root
@@ -161,7 +161,56 @@ class MyApp(tk.Frame):
         """
         
         # Titanic man 1
-        self.portrait = ImageTk.PhotoImage(Image.open("titanicman1.jpg"))
+        self.portrait = ImageTk.PhotoImage(Image.open("titanicman1.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+        image_label = tk.Label(self.page_container, image=self.portrait)
+        image_label.grid(row=0,column=0,rowspan=4)
+        story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
+        story_txt.grid(row=0, column=1,columnspan=2,sticky="w")
+        question_txt = tk.Label(self.page_container,text="Did they survive the Titanic?", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        question_txt.grid(row=1, column=1,columnspan=2,sticky="n")
+
+        # Here needs to connect to the model - must create functions storing user input 
+        # yes = 1, no = 0, if yes_btn.click() or something like that
+        no_btn = tk.Button(self.page_container, text="No", font=("Helvetica", 20), fg="white", bg="#7A0A0A")
+        no_btn.grid(row=2,column=1,sticky="s")
+        yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a")
+        yes_btn.grid(row=2,column=2,sticky="s")
+
+        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
+        next_btn.grid(row=3,column=2,sticky="se")
+    
+    def game_page2(self):
+        self.page_container = tk.Frame(
+            self.main_frame,
+            bg="#217fdd"
+        )
+
+        def change_page():
+            self.clear_frame(self.page_container)
+            self.current_page_index += 1
+            self.pages[self.current_page_index]()
+
+        self.page_container.columnconfigure(0,weight=1)
+        self.page_container.columnconfigure(1,weight=1)
+        self.page_container.columnconfigure(2,weight=1)
+        self.page_container.rowconfigure(0,weight=1)
+        self.page_container.rowconfigure(1,weight=1)
+        self.page_container.rowconfigure(2,weight=1)
+        self.page_container.rowconfigure(3,weight=1)
+        self.page_container.grid(column=0, row=0, sticky=tk.NSEW)
+
+        # Survived - PassengerId = 3
+        story = """
+        Story 2:
+        How do you do? My names Miss. Laina Heikkinen. As you can tell, I'm not married. 
+        In fact I'm here all alone. My grandma gifted me a ticket here for my birthday.
+        We aren't wealthy so I'm staying in a shared cabin on the lower decks, but
+        it doesn't matter, its such a beautiful ship and I'm having a great time.
+        I can't wait to tell my family all about the experience!
+        """
+        
+        # Titanic woman 2
+        self.portrait = ImageTk.PhotoImage(Image.open("titanicwoman2.jpg").resize((450, 600), Image.Resampling.LANCZOS))
         image_label = tk.Label(self.page_container, image=self.portrait)
         # Change to grid
         # image_label.place(x=0, y=0, relwidth=1, relheight=1)
@@ -175,10 +224,10 @@ class MyApp(tk.Frame):
         no_btn.grid(row=2,column=1,sticky="s")
         yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a")
         yes_btn.grid(row=2,column=2,sticky="s")
-        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd")
+        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
         next_btn.grid(row=3,column=2,sticky="se")
-    
-    def game_page2(self):
+
+    def game_page3(self):
         self.page_container = tk.Frame(
             self.main_frame,
             bg="#217fdd"
@@ -188,13 +237,140 @@ class MyApp(tk.Frame):
             self.clear_frame(self.page_container)
             self.current_page_index += 1
             self.pages[self.current_page_index]()
+
+        self.page_container.columnconfigure(0,weight=1)
+        self.page_container.columnconfigure(1,weight=1)
+        self.page_container.columnconfigure(2,weight=1)
+        self.page_container.rowconfigure(0,weight=1)
+        self.page_container.rowconfigure(1,weight=1)
+        self.page_container.rowconfigure(2,weight=1)
+        self.page_container.rowconfigure(3,weight=1)
+        self.page_container.grid(column=0, row=0, sticky=tk.NSEW)
+
+        # Suvived - PassengerId = 18
+        story = """
+        Story 3:
+        Hello, I'm Mr. Charles Eugene Williams, but you can call me Charles.
+        I'm taking a vacation from my ungrateful family, I work so hard, buy them
+        tons of nice things, but all they do is complain. I heard about the Titanic
+        on the news and quickly bought this 2nd class ticket, all the first class
+        ones were sold out, or I woulda bought 2, one for me, and one for my bags.
+        I'm close enough to all the amenities on the top floor, so I don't mind being
+        where I am. 
+        """
         
-        # Titanic man 1
-        self.portrait = ImageTk.PhotoImage(Image.open("titanicman1.jpg"))
+        # Titanic man 3
+        # Width  * height
+        self.portrait = ImageTk.PhotoImage(Image.open("titanicman3.jpg").resize((450, 600), Image.Resampling.LANCZOS))
         image_label = tk.Label(self.page_container, image=self.portrait)
-        # Change to grid
-        image_label.place(x=0, y=0, relwidth=1, relheight=1)
-        image_label.lower()
+        image_label.grid(row=0,column=0,rowspan=4,sticky="w")
+        story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
+        story_txt.grid(row=0, column=1,columnspan=2,sticky="w")
+        question_txt = tk.Label(self.page_container,text="Did they survive the Titanic?", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        question_txt.grid(row=1, column=1,columnspan=2,sticky="n")
+
+
+        no_btn = tk.Button(self.page_container, text="No", font=("Helvetica", 20), fg="white", bg="#7A0A0A")
+        no_btn.grid(row=2,column=1,sticky="s")
+        yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a")
+        yes_btn.grid(row=2,column=2,sticky="s")
+
+
+        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
+        next_btn.grid(row=3,column=2,sticky="se")
+
+    def game_page4(self):
+        self.page_container = tk.Frame(
+            self.main_frame,
+            bg="#217fdd"
+        )
+
+        def change_page():
+            self.clear_frame(self.page_container)
+            self.current_page_index += 1
+            self.pages[self.current_page_index]()
+
+        self.page_container.columnconfigure(0,weight=1)
+        self.page_container.columnconfigure(1,weight=1)
+        self.page_container.columnconfigure(2,weight=1)
+        self.page_container.rowconfigure(0,weight=1)
+        self.page_container.rowconfigure(1,weight=1)
+        self.page_container.rowconfigure(2,weight=1)
+        self.page_container.rowconfigure(3,weight=1)
+        self.page_container.grid(column=0, row=0, sticky=tk.NSEW)
+
+        # Survived - PassengerId = 44
+        story = """
+        Story 4:
+        Goo goo ga ga. I'm Miss. Simone Marie Anne Andree Laroche! I'm only 3! My parents 
+        are amazing and buy me tons of nice things!
+        Like this 2nd class ticket to the Titanic! This ship is amazing!
+        """
+        
+        self.portrait = ImageTk.PhotoImage(Image.open("titanicbaby.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+        image_label = tk.Label(self.page_container, image=self.portrait)
+        image_label.grid(row=0,column=0,rowspan=4,sticky="w")
+        story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
+        story_txt.grid(row=0, column=1,columnspan=2,sticky="w")
+        question_txt = tk.Label(self.page_container,text="Did they survive the Titanic?", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        question_txt.grid(row=1, column=1,columnspan=2,sticky="n")
+
+
+        no_btn = tk.Button(self.page_container, text="No", font=("Helvetica", 20), fg="white", bg="#7A0A0A")
+        no_btn.grid(row=2,column=1,sticky="s")
+        yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a")
+        yes_btn.grid(row=2,column=2,sticky="s")
+
+
+        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
+        next_btn.grid(row=3,column=2,sticky="se")
+
+    def game_page5(self):
+        self.page_container = tk.Frame(
+            self.main_frame,
+            bg="#217fdd"
+        )
+
+        def change_page():
+            self.clear_frame(self.page_container)
+            self.current_page_index += 1
+            self.pages[self.current_page_index]()
+
+        self.page_container.columnconfigure(0,weight=1)
+        self.page_container.columnconfigure(1,weight=1)
+        self.page_container.columnconfigure(2,weight=1)
+        self.page_container.rowconfigure(0,weight=1)
+        self.page_container.rowconfigure(1,weight=1)
+        self.page_container.rowconfigure(2,weight=1)
+        self.page_container.rowconfigure(3,weight=1)
+        self.page_container.grid(column=0, row=0, sticky=tk.NSEW)
+
+        # Survived - PassengerId = 86
+        story = """
+        Story 5:
+        Well hey there, my names Mrs. Karl Alfred. My husband thought it would be nice to surprise 
+        the family with Titanic tickets, so here we are. Our quarters are cramped, but its a fabulous
+        ship with tons to do. If only the kid didn't keep running away, at least were getting
+        good exercise.
+        """
+        
+        self.portrait = ImageTk.PhotoImage(Image.open("titanicmom.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+        image_label = tk.Label(self.page_container, image=self.portrait)
+        image_label.grid(row=0,column=0,rowspan=4,sticky="w")
+        story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
+        story_txt.grid(row=0, column=1,columnspan=2,sticky="w")
+        question_txt = tk.Label(self.page_container,text="Did they survive the Titanic?", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        question_txt.grid(row=1, column=1,columnspan=2,sticky="n")
+
+
+        no_btn = tk.Button(self.page_container, text="No", font=("Helvetica", 20), fg="white", bg="#7A0A0A")
+        no_btn.grid(row=2,column=1,sticky="s")
+        yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a")
+        yes_btn.grid(row=2,column=2,sticky="s")
+
+
+        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
+        next_btn.grid(row=3,column=2,sticky="se")
 
 root = tk.Tk()
 root.title('Titanic Guesser')
@@ -203,78 +379,3 @@ root.resizable(width=False,height=False)
 # Passing root to a frame that packs it on the screen
 app_instance = MyApp(root)
 root.mainloop()
-
-# First scene - intro describing the game
-
-# Text label title
-# Text label authors 
-# Info/how to play button revealing textbox detailing what game is and how model works with it
-# with button allowing user to start the game
-
-# Set root window and window size (width x height)
-# root = tk.Tk()
-# root.geometry("1000x650")
-
-# image = Image.open('titanic.jpg')
-# image = ImageTk.PhotoImage(image)
-
-# # Put image in a label - basic - not good for background image
-# image_label = tk.Label(root, image=image)
-# #image_label.pack()
-# image_label.place(x=0,y=0,relwidth=1,relheight=1)
-# # Place behind other widgets
-# image_label.lower()
-
-# # For rules label
-# rules = """
-# The sinking of the Titanic in 1912 was a tragic event that took hundreds of lives. 
-# It turns out that many factors influenced whether someone would survive the crash.
-# You will be introduced to former passengers of the Titanic. You
-# will listen to their stories, investigate the scene, and determine whether
-# you think they would survive the crash.
-# This is a Machine Learning game. Your geuss will be run through a trained ML Model.
-# This model will decide whether you are correct, based on its training data.
-# """
-
-# # When rules button is clicked, want to make a label visible
-# # describing the game + model
-# # Don't know how to make button visible and not visible
-# # def on_click():
-# #     rule_txt.pack(anchor="w")
-
-# # frame1 = tk.Frame(root, bg="#096bcd")
-# # frame1.pack()
-
-# title_txt = tk.Label(root, text="Titanic Geusser", font=("Helvetica", 30), fg="white",bg="#217fdd") 
-# title_txt.pack()
-# author_txt = tk.Label(root, text="Olly Love, Nathan Singer, David Kelly", font=("Helvetica", 15), fg="white",bg="#217fdd")
-# author_txt.pack()
-# rule_btn = tk.Button(root, text="Rules", font=("Helvetica", 15), fg="white", bg="#217fdd")
-# rule_btn.pack(anchor="w", pady=20)
-# rule_txt = tk.Label(root, text=rules, font=("Helvetica", 12), fg="white",bg="#217fdd",wraplength=400,justify="left")
-# rule_txt.pack(anchor="w")
-# # Want to add an on click to change scenes
-# start_btn = tk.Button(root, text="Start", font=("Helvetica", 20), fg="white", bg="#217fdd")
-# start_btn.pack(pady=20)
-
-# Sample showing frame of buttons
-
-# Can have frame for bunch of buttons in a row, think can have frames within frames
-# effectively a frame can be used as a container
-# my_frame = tk.Frame(root,bg="#096bcd")
-# my_frame.pack(pady=200)
-
-# # Add some buttons
-# my_button1 = tk.Button(my_frame, text="Exit")
-# # When adding to a frame must use grid
-# my_button1.grid(row=0,column=0,padx=20)
-
-# my_button2 = tk.Button(my_frame, text="Start")
-# # When adding to a frame must use grid
-# my_button2.grid(row=0,column=1,padx=20)
-
-# my_button3 = tk.Button(my_frame, text="Reset")
-# # When adding to a frame must use grid
-# my_button3.grid(row=0,column=2,padx=20)
-
-#root.mainloop()
