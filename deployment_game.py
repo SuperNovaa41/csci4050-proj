@@ -140,7 +140,7 @@ class MyApp(tk.Frame):
 
         # This stuff would be moved to a different function, this not structure but what
         # goes in the structure, and root should be changed
-        title_txt = tk.Label(self.page_container, text="Titanic Geusser", font=("Helvetica", 30), fg="white",bg="#217fdd")
+        title_txt = tk.Label(self.page_container, text="Titanic Guesser", font=("Helvetica", 30), fg="white",bg="#217fdd")
         title_txt.grid(row=0, column=1)
         author_txt = tk.Label(self.page_container, text="Olly Love, Nathan Singer, David Kelly", font=("Helvetica", 15), fg="white",bg="#217fdd")
         author_txt.grid(row=1,column=1)
