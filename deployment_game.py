@@ -5,6 +5,8 @@
 # The geuss is validated with an MLP Machine Learning model
 
 import tkinter as tk
+
+from tkinter.messagebox import showinfo
 from PIL import Image, ImageTk
 import torch
 from models import MLPClassifier
@@ -55,8 +57,14 @@ class MyApp(tk.Frame):
             #preds = (preds > 0.5).float()
             preds = torch.argmax(logits, dim=1)
             # Gives value within preds tensor
-            print(preds.item())
+            # print(preds.item())
             return preds.item()
+
+    def change_page(self):
+        self.clear_frame(self.page_container)
+        self.current_page_index += 1
+        self.pages[self.current_page_index]()
+
 
     # When user clicks yes or no button, check with correct
     # answer from model
@@ -65,25 +73,27 @@ class MyApp(tk.Frame):
         if self.no_button == 1 and correct == 0:
             self.total_score += 1
             self.no_button = 0
-            print("Correct")
+            showinfo("Question Response", "Correct")
         elif self.no_button == 1 and correct == 1:
             self.no_button = 0
-            print("Incorrect")
+            showinfo("Question Response", "Incorrect")
         elif self.yes_button == 1 and correct == 1:
             self.total_score += 1
             self.yes_button = 0
-            print("Correct")
+            showinfo("Question Response", "Correct")
         elif self.yes_button == 1 and correct == 0:
             self.yes_button = 0
-            print("Incorrect")
+            showinfo("Question Response", "Incorrect")
 
     def no_btn_clicked(self):
         self.no_button = 1
         self.score()
+        self.change_page()
 
     def yes_btn_clicked(self):
         self.yes_button = 1
         self.score()
+        self.change_page()
 
     # Container for main menu page
     def create_page_container(self):
@@ -180,11 +190,6 @@ class MyApp(tk.Frame):
             bg="#217fdd"
         )
 
-        def change_page():
-            self.clear_frame(self.page_container)
-            self.current_page_index += 1
-            self.pages[self.current_page_index]()
-
         self.page_container.columnconfigure(0,weight=1)
         self.page_container.columnconfigure(1,weight=1)
         self.page_container.columnconfigure(2,weight=1)
@@ -230,19 +235,12 @@ class MyApp(tk.Frame):
         score_txt = tk.Label(self.page_container,text="Score: " + str(self.total_score), font=("Helvetica", 12),fg="white",bg="#217fdd")
         score_txt.grid(row=3, column=1,sticky="w")
 
-        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
-        next_btn.grid(row=3,column=2,sticky="se")
-
     def game_page2(self):
         self.page_container = tk.Frame(
             self.main_frame,
             bg="#217fdd"
         )
 
-        def change_page():
-            self.clear_frame(self.page_container)
-            self.current_page_index += 1
-            self.pages[self.current_page_index]()
 
         self.page_container.columnconfigure(0,weight=1)
         self.page_container.columnconfigure(1,weight=1)
@@ -281,19 +279,12 @@ class MyApp(tk.Frame):
         yes_btn.grid(row=2,column=2,sticky="s")
         score_txt = tk.Label(self.page_container,text="Score: " + str(self.total_score), font=("Helvetica", 12),fg="white",bg="#217fdd")
         score_txt.grid(row=3, column=1,sticky="w")
-        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
-        next_btn.grid(row=3,column=2,sticky="se")
 
     def game_page3(self):
         self.page_container = tk.Frame(
             self.main_frame,
             bg="#217fdd"
         )
-
-        def change_page():
-            self.clear_frame(self.page_container)
-            self.current_page_index += 1
-            self.pages[self.current_page_index]()
 
         self.page_container.columnconfigure(0,weight=1)
         self.page_container.columnconfigure(1,weight=1)
@@ -335,19 +326,12 @@ class MyApp(tk.Frame):
         score_txt = tk.Label(self.page_container,text="Score: " + str(self.total_score), font=("Helvetica", 12),fg="white",bg="#217fdd")
         score_txt.grid(row=3, column=1,sticky="w")
 
-        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
-        next_btn.grid(row=3,column=2,sticky="se")
 
     def game_page4(self):
         self.page_container = tk.Frame(
             self.main_frame,
             bg="#217fdd"
         )
-
-        def change_page():
-            self.clear_frame(self.page_container)
-            self.current_page_index += 1
-            self.pages[self.current_page_index]()
 
         self.page_container.columnconfigure(0,weight=1)
         self.page_container.columnconfigure(1,weight=1)
@@ -383,19 +367,12 @@ class MyApp(tk.Frame):
         score_txt = tk.Label(self.page_container,text="Score: " + str(self.total_score), font=("Helvetica", 12),fg="white",bg="#217fdd")
         score_txt.grid(row=3, column=1,sticky="w")
 
-        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
-        next_btn.grid(row=3,column=2,sticky="se")
 
     def game_page5(self):
         self.page_container = tk.Frame(
             self.main_frame,
             bg="#217fdd"
         )
-
-        def change_page():
-            self.clear_frame(self.page_container)
-            self.current_page_index += 1
-            self.pages[self.current_page_index]()
 
         self.page_container.columnconfigure(0,weight=1)
         self.page_container.columnconfigure(1,weight=1)
@@ -432,8 +409,6 @@ class MyApp(tk.Frame):
         score_txt = tk.Label(self.page_container,text="Score: " + str(self.total_score), font=("Helvetica", 12),fg="white",bg="#217fdd")
         score_txt.grid(row=3, column=1,sticky="w")
 
-        next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
-        next_btn.grid(row=3,column=2,sticky="se")
 
     # Final page showing users final score
     def end_page(self):
