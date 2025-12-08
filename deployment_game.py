@@ -15,7 +15,7 @@ class MyApp(tk.Frame):
     def __init__(self, root):
 
         self.current_page_index = 0
-        self.pages = [self.create_page_container, self.hint_page, self.game_page1, self.game_page2,self.game_page3,self.game_page4,self.game_page5,self.end_page]
+        self.pages = [self.create_page_container, self.hint_page, self.game_page1, self.game_page2,self.game_page3,self.game_page4,self.game_page5,self.build_passenger_page,self.end_page]
         self.total_score = 0
         # These switch when user clicks yes or no buttons
         self.no_button = 0
@@ -437,6 +437,7 @@ The model will decide whether you are correct, based on its training data.
         self.page_container.columnconfigure(0,weight=1)
         self.page_container.rowconfigure(0,weight=1)
         self.page_container.rowconfigure(1,weight=1)
+        self.page_container.rowconfigure(2,weight=1)
         self.page_container.grid(column=0, row=0, sticky=tk.NSEW)
 
         question_txt = tk.Label(self.page_container,text="The End!", font=("Helvetica", 30),fg="white",bg="#217fdd")
@@ -444,6 +445,97 @@ The model will decide whether you are correct, based on its training data.
 
         score_txt = tk.Label(self.page_container,text="Final Score: " + str(self.total_score), font=("Helvetica", 30),fg="white",bg="#217fdd")
         score_txt.grid(row=1, column=0)
+
+        bonus_txt = tk.Label(self.page_container,text="1 if your passenger survived, else 0: " + str(self.custom_survival), font=("Helvetica", 15),fg="white",bg="#217fdd")
+        bonus_txt.grid(row=2, column=0)
+
+    # Bonus build passenger page
+    def build_passenger_page(self):
+        self.page_container = tk.Frame(
+            self.main_frame,
+            bg="#217fdd"
+        )
+
+        # Evaluate character survival and change page
+        def submit_input():
+            self.current_features = [
+                int(entry.get()), 
+                int(entry2.get()),
+                int(entry3.get()),
+                int(entry4.get()),
+                int(entry5.get()),
+                int(entry6.get()),
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1
+            ]
+            survived = self.ml_evaluate()
+            if survived == 1:
+                self.custom_survival = 1
+            else:
+                self.custom_survival = 0
+            
+            self.clear_frame(self.page_container)
+            self.current_page_index += 1
+            self.pages[self.current_page_index]()
+
+        self.page_container.columnconfigure(0,weight=1)
+        self.page_container.columnconfigure(1,weight=1)
+
+        self.page_container.rowconfigure(0,weight=1)
+        self.page_container.rowconfigure(1,weight=1)
+        self.page_container.rowconfigure(2,weight=1)
+        self.page_container.rowconfigure(3,weight=1)
+        self.page_container.rowconfigure(4,weight=1)
+        self.page_container.rowconfigure(5,weight=1)
+        self.page_container.rowconfigure(6,weight=1)
+        self.page_container.rowconfigure(7,weight=1)
+
+        self.page_container.grid(column=0, row=0, sticky=tk.NSEW)
+
+        title_txt = tk.Label(self.page_container,text="Bonus: Create a Passenger", font=("Helvetica", 30),fg="white",bg="#217fdd")
+        title_txt.grid(row=0, column=0,columnspan=2)
+        entry1_txt = tk.Label(self.page_container,text="Class: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry1_txt.grid(row=1, column=0)
+        entry = tk.Entry(self.page_container, width=30)
+        entry.grid(row=1,column=1)
+
+        entry2_txt = tk.Label(self.page_container,text="Sex (0 for male, 1 for female): ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry2_txt.grid(row=2, column=0)
+        entry2 = tk.Entry(self.page_container, width=30)
+        entry2.grid(row=2,column=1)
+
+        entry3_txt = tk.Label(self.page_container,text="Age: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry3_txt.grid(row=3, column=0)
+        entry3 = tk.Entry(self.page_container, width=30)
+        entry3.grid(row=3,column=1)
+
+        entry4_txt = tk.Label(self.page_container,text="# of Siblings/Spouse: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry4_txt.grid(row=4, column=0)
+        entry4 = tk.Entry(self.page_container, width=30)
+        entry4.grid(row=4,column=1)
+
+        entry5_txt = tk.Label(self.page_container,text="# of Parents/Children: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry5_txt.grid(row=5, column=0)
+        entry5 = tk.Entry(self.page_container, width=30)
+        entry5.grid(row=5,column=1)
+
+        entry6_txt = tk.Label(self.page_container,text="Fare Paid (digits only) $: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry6_txt.grid(row=6, column=0)
+        entry6 = tk.Entry(self.page_container, width=30)
+        entry6.grid(row=6,column=1)
+
+        submit_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=submit_input)
+        submit_btn.grid(row=7,column=0)
 
 root = tk.Tk()
 root.title('Titanic Guesser')
