@@ -446,7 +446,12 @@ The model will decide whether you are correct, based on its training data.
         score_txt = tk.Label(self.page_container,text="Final Score: " + str(self.total_score), font=("Helvetica", 30),fg="white",bg="#217fdd")
         score_txt.grid(row=1, column=0)
 
-        bonus_txt = tk.Label(self.page_container,text="1 if your passenger survived, else 0: " + str(self.custom_survival), font=("Helvetica", 15),fg="white",bg="#217fdd")
+        if self.custom_survival:
+            bonus_label = "The custom passenger survived!"
+        else:
+            bonus_label = "The custom passenger did not survive..."
+
+        bonus_txt = tk.Label(self.page_container,text=bonus_label, font=("Helvetica", 15),fg="white",bg="#217fdd")
         bonus_txt.grid(row=2, column=0)
 
     # Bonus build passenger page
@@ -459,7 +464,7 @@ The model will decide whether you are correct, based on its training data.
         # Evaluate character survival and change page
         def submit_input():
             self.current_features = [
-                int(entry.get()), 
+                int(entry.get()),
                 int(entry2.get()),
                 int(entry3.get()),
                 int(entry4.get()),
@@ -483,7 +488,7 @@ The model will decide whether you are correct, based on its training data.
                 self.custom_survival = 1
             else:
                 self.custom_survival = 0
-            
+
             self.clear_frame(self.page_container)
             self.current_page_index += 1
             self.pages[self.current_page_index]()
@@ -504,7 +509,7 @@ The model will decide whether you are correct, based on its training data.
 
         title_txt = tk.Label(self.page_container,text="Bonus: Create a Passenger", font=("Helvetica", 30),fg="white",bg="#217fdd")
         title_txt.grid(row=0, column=0,columnspan=2)
-        entry1_txt = tk.Label(self.page_container,text="Class: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry1_txt = tk.Label(self.page_container,text="Class (1/2/3): ", font=("Helvetica", 12),fg="white",bg="#217fdd")
         entry1_txt.grid(row=1, column=0)
         entry = tk.Entry(self.page_container, width=30)
         entry.grid(row=1,column=1)
@@ -519,12 +524,12 @@ The model will decide whether you are correct, based on its training data.
         entry3 = tk.Entry(self.page_container, width=30)
         entry3.grid(row=3,column=1)
 
-        entry4_txt = tk.Label(self.page_container,text="# of Siblings/Spouse: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry4_txt = tk.Label(self.page_container,text="# of Siblings/Spouse on board: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
         entry4_txt.grid(row=4, column=0)
         entry4 = tk.Entry(self.page_container, width=30)
         entry4.grid(row=4,column=1)
 
-        entry5_txt = tk.Label(self.page_container,text="# of Parents/Children: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
+        entry5_txt = tk.Label(self.page_container,text="# of Parents/Children on board: ", font=("Helvetica", 12),fg="white",bg="#217fdd")
         entry5_txt.grid(row=5, column=0)
         entry5 = tk.Entry(self.page_container, width=30)
         entry5.grid(row=5,column=1)
