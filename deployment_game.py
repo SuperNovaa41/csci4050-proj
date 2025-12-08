@@ -42,7 +42,7 @@ class MyApp(tk.Frame):
             child.destroy()
 
     # Model deployment!
-    # Evaluates the features of the titanic passengers story 
+    # Evaluates the features of the titanic passengers story
     # returning 1 or 0 for whether they survived or not
     def ml_evaluate(self):
         model: MLPClassifier = torch.load("mlp_onelayer_model.mdl",weights_only=False)
@@ -59,7 +59,7 @@ class MyApp(tk.Frame):
             return preds.item()
 
     # When user clicks yes or no button, check with correct
-    # answer from model 
+    # answer from model
     def score(self):
         correct = self.ml_evaluate()
         if self.no_button == 1 and correct == 0:
@@ -97,7 +97,7 @@ class MyApp(tk.Frame):
             self.pages[self.current_page_index]()
 
         # Background image
-        self.bg_image = ImageTk.PhotoImage(Image.open("titanic.jpg"))
+        self.bg_image = ImageTk.PhotoImage(Image.open("imgs/titanic.jpg"))
         image_label = tk.Label(self.page_container, image=self.bg_image)
         image_label.place(x=0, y=0, relwidth=1, relheight=1)
         image_label.lower()
@@ -106,7 +106,7 @@ class MyApp(tk.Frame):
 
         # For rules label
         rules = """
-        The sinking of the Titanic in 1912 was a tragic event that took hundreds of lives. 
+        The sinking of the Titanic in 1912 was a tragic event that took hundreds of lives.
         It turns out that many factors influenced whether someone would survive the crash.
         You will be introduced to former passengers of the Titanic. You
         will listen to their stories, investigate the scene, and determine whether
@@ -131,7 +131,7 @@ class MyApp(tk.Frame):
 
         # This stuff would be moved to a different function, this not structure but what
         # goes in the structure, and root should be changed
-        title_txt = tk.Label(self.page_container, text="Titanic Geusser", font=("Helvetica", 30), fg="white",bg="#217fdd") 
+        title_txt = tk.Label(self.page_container, text="Titanic Geusser", font=("Helvetica", 30), fg="white",bg="#217fdd")
         title_txt.grid(row=0, column=1)
         author_txt = tk.Label(self.page_container, text="Olly Love, Nathan Singer, David Kelly", font=("Helvetica", 15), fg="white",bg="#217fdd")
         author_txt.grid(row=1,column=1)
@@ -204,15 +204,15 @@ class MyApp(tk.Frame):
         and just had to go. I worked extra hours as a server to make just enough
         for a 3rd class ticket. Its hard finding work at my age as I'm only 22, not
         many people want to hire someone like me, especially with no university education.
-        I worked very hard to be here, I even managed to grab an extra ticket for my brother Lewis. 
+        I worked very hard to be here, I even managed to grab an extra ticket for my brother Lewis.
         I see all these families around, I'm so grateful I don't have any kids to look
-        after, that seems like a tough job. Though, some of those families are living on 
+        after, that seems like a tough job. Though, some of those families are living on
         the upper decks, I'm in a shared cabin at the bottom of the ship.
         Theres always a compromise, but I'm enjoying my time here anyways.
         """
-        
+
         # Titanic man 1
-        self.portrait = ImageTk.PhotoImage(Image.open("titanicman1.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+        self.portrait = ImageTk.PhotoImage(Image.open("imgs/titanicman1.jpg").resize((450, 600), Image.Resampling.LANCZOS))
         image_label = tk.Label(self.page_container, image=self.portrait)
         image_label.grid(row=0,column=0,rowspan=4)
         story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
@@ -220,19 +220,19 @@ class MyApp(tk.Frame):
         question_txt = tk.Label(self.page_container,text="Did they survive the Titanic?", font=("Helvetica", 12),fg="white",bg="#217fdd")
         question_txt.grid(row=1, column=1,columnspan=2,sticky="n")
 
-        # Here needs to connect to the model - must create functions storing user input 
+        # Here needs to connect to the model - must create functions storing user input
         # yes = 1, no = 0, if yes_btn.click() or something like that
         no_btn = tk.Button(self.page_container, text="No", font=("Helvetica", 20), fg="white", bg="#7A0A0A",command=self.no_btn_clicked)
         no_btn.grid(row=2,column=1,sticky="s")
         yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a",command=self.yes_btn_clicked)
         yes_btn.grid(row=2,column=2,sticky="s")
-        
+
         score_txt = tk.Label(self.page_container,text="Score: " + str(self.total_score), font=("Helvetica", 12),fg="white",bg="#217fdd")
         score_txt.grid(row=3, column=1,sticky="w")
-        
+
         next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
         next_btn.grid(row=3,column=2,sticky="se")
-    
+
     def game_page2(self):
         self.page_container = tk.Frame(
             self.main_frame,
@@ -257,15 +257,15 @@ class MyApp(tk.Frame):
         self.current_features = [3,1,26.000000,0,0,7.9250,0,0,0,0,0,0,0,0,1,0,0,1]
         story = """
         Story 2:
-        How do you do? My names Miss. Laina Heikkinen. As you can tell, I'm not married. 
+        How do you do? My names Miss. Laina Heikkinen. As you can tell, I'm not married.
         In fact I'm here all alone. My grandma gifted me a ticket here for my birthday.
         We aren't wealthy so I'm staying in a shared cabin on the lower decks, but
         it doesn't matter, its such a beautiful ship and I'm having a great time.
         I can't wait to tell my family all about the experience!
         """
-        
+
         # Titanic woman 2
-        self.portrait = ImageTk.PhotoImage(Image.open("titanicwoman2.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+        self.portrait = ImageTk.PhotoImage(Image.open("imgs/titanicwoman2.jpg").resize((450, 600), Image.Resampling.LANCZOS))
         image_label = tk.Label(self.page_container, image=self.portrait)
         # Change to grid
         # image_label.place(x=0, y=0, relwidth=1, relheight=1)
@@ -314,12 +314,12 @@ class MyApp(tk.Frame):
         on the news and quickly bought this 2nd class ticket, all the first class
         ones were sold out, or I woulda bought 2, one for me, and one for my bags.
         I'm close enough to all the amenities on the top floor, so I don't mind being
-        where I am. 
+        where I am.
         """
-        
+
         # Titanic man 3
         # Width  * height
-        self.portrait = ImageTk.PhotoImage(Image.open("titanicman3.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+        self.portrait = ImageTk.PhotoImage(Image.open("imgs/titanicman3.jpg").resize((450, 600), Image.Resampling.LANCZOS))
         image_label = tk.Label(self.page_container, image=self.portrait)
         image_label.grid(row=0,column=0,rowspan=4,sticky="w")
         story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
@@ -362,12 +362,12 @@ class MyApp(tk.Frame):
         self.current_features = [2,1,3,1,2,41.5792,0,0,0,0,0,0,0,0,1,1,0,0]
         story = """
         Story 4:
-        Goo goo ga ga. I'm Miss. Simone Marie Anne Andree Laroche! I'm only 3! My parents 
+        Goo goo ga ga. I'm Miss. Simone Marie Anne Andree Laroche! I'm only 3! My parents
         are amazing and buy me tons of nice things!
         Like this 2nd class ticket to the Titanic! This ship is amazing!
         """
-        
-        self.portrait = ImageTk.PhotoImage(Image.open("titanicbaby.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+
+        self.portrait = ImageTk.PhotoImage(Image.open("imgs/titanicbaby.jpg").resize((450, 600), Image.Resampling.LANCZOS))
         image_label = tk.Label(self.page_container, image=self.portrait)
         image_label.grid(row=0,column=0,rowspan=4,sticky="w")
         story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
@@ -410,13 +410,13 @@ class MyApp(tk.Frame):
         self.current_features = [3,1,33,3,0,15.85,0,0,0,0,0,0,0,0,1,0,0,1]
         story = """
         Story 5:
-        Well hey there, my names Mrs. Karl Alfred. My husband thought it would be nice to surprise 
+        Well hey there, my names Mrs. Karl Alfred. My husband thought it would be nice to surprise
         the family with Titanic tickets, so here we are. Our quarters are cramped, but its a fabulous
         ship with tons to do. If only the kid didn't keep running away, at least were getting
         good exercise.
         """
-        
-        self.portrait = ImageTk.PhotoImage(Image.open("titanicmom.jpg").resize((450, 600), Image.Resampling.LANCZOS))
+
+        self.portrait = ImageTk.PhotoImage(Image.open("imgs/titanicmom.jpg").resize((450, 600), Image.Resampling.LANCZOS))
         image_label = tk.Label(self.page_container, image=self.portrait)
         image_label.grid(row=0,column=0,rowspan=4,sticky="w")
         story_txt = tk.Label(self.page_container,text=story, font=("Helvetica", 12),wraplength=500,fg="white",bg="#217fdd",anchor="w")
@@ -441,7 +441,7 @@ class MyApp(tk.Frame):
             self.main_frame,
         )
 
-        self.bg_image = ImageTk.PhotoImage(Image.open("titanic.jpg"))
+        self.bg_image = ImageTk.PhotoImage(Image.open("imgs/titanic.jpg"))
         image_label = tk.Label(self.page_container, image=self.bg_image)
         image_label.place(x=0, y=0, relwidth=1, relheight=1)
         image_label.lower()
