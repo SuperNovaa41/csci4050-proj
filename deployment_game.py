@@ -1,5 +1,5 @@
 # Machine Learning Final Project Model Deployment
-# Titanic Survival Geussing Game
+# Titanic Survival Guessing Game
 # User will be met with a story from a titanic passenger
 # They make a guess whether that person survived
 # The guess is validated with an MLP Machine Learning model
