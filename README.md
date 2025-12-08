@@ -29,7 +29,7 @@ Some of the designs we chose, Linear, Logistic, MLP, showed great results in cla
 
 Some we chose, in particular the Tabular Autoencoder, simply do not work for this type of dataset.
 
-After a thourough investigation, we have determined that MLP outputs the best results for classifying the Titanic data, and have deployed it into a simple guessing game.
+After a thourough investigation, we have determined that MLP 4D outputs the best results for classifying the Titanic data, and have deployed it into a simple guessing game.
 
 ## How does the game work?
 

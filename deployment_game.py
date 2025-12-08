@@ -47,8 +47,8 @@ class MyApp(tk.Frame):
     # Evaluates the features of the titanic passengers story
     # returning 1 or 0 for whether they survived or not
     def ml_evaluate(self):
-        model: MLPClassifier = torch.load("models/mlp_onelayer_model.mdl", weights_only=False)
-        #model: MLP4DResidualClassifier = torch.load("models/mlp_fourlayer_model.mdl", weights_only = False)
+        #model: MLPClassifier = torch.load("models/mlp_onelayer_model.mdl", weights_only=False)
+        model: MLP4DResidualClassifier = torch.load("models/mlp_fourlayer_model.mdl", weights_only = False)
         model.eval()
         x = torch.tensor([self.current_features], dtype=torch.float32)
         with torch.no_grad():
