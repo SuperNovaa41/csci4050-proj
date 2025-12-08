@@ -48,7 +48,7 @@ class MyApp(tk.Frame):
     # returning 1 or 0 for whether they survived or not
     def ml_evaluate(self):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        if device != "cpu":
+        if device.type != "cpu":
             model: MLP4DResidualClassifier = torch.load("models/mlp_fourlayer_model.mdl", weights_only = False)
         else:
             model: MLP4DResidualClassifier = torch.load("models/mlp_fourlayer_model.mdl", weights_only = False, map_location=device)
