@@ -9,7 +9,7 @@ import tkinter as tk
 from tkinter.messagebox import showinfo
 from PIL import Image, ImageTk
 import torch
-from models import MLPClassifier
+from models import MLPClassifier, MLP4DResidualClassifier
 
 class MyApp(tk.Frame):
     def __init__(self, root):
@@ -47,14 +47,13 @@ class MyApp(tk.Frame):
     # Evaluates the features of the titanic passengers story
     # returning 1 or 0 for whether they survived or not
     def ml_evaluate(self):
-        model: MLPClassifier = torch.load("mlp_onelayer_model.mdl",weights_only=False)
+        model: MLPClassifier = torch.load("models/mlp_onelayer_model.mdl", weights_only=False)
+        # model: MLP4DResidualClassifier = torch.load("models/mlp_fourlayer_model.mdl", weights_only = False)
         model.eval()
         x = torch.tensor([self.current_features], dtype=torch.float32)
         with torch.no_grad():
             x = x.to("cpu")
             logits = model(x)
-            #_, preds = model(x)
-            #preds = (preds > 0.5).float()
             preds = torch.argmax(logits, dim=1)
             # Gives value within preds tensor
             # print(preds.item())
