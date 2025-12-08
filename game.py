@@ -1,5 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+import torch
+from models import MLPClassifier
 
 # For now forget about formatting and just set up 
 # page switching with different scenarios
@@ -9,6 +11,10 @@ class MyApp(tk.Frame):
 
         self.current_page_index = 0
         self.pages = [self.create_page_container, self.hint_page, self.game_page1, self.game_page2,self.game_page3,self.game_page4,self.game_page5]
+        self.score = 0
+        # These switch when user clicks yes or no buttons
+        self.no_button = 0
+        self.yes_button = 0
 
         super().__init__(
             root
@@ -30,6 +36,39 @@ class MyApp(tk.Frame):
     def clear_frame(self,frame):
         for child in frame.winfo_children():
             child.destroy()
+
+    # Evaluates the features of the titanic passengers story 
+    # returning 1 or 0 for whether they survived or not
+    def ml_evaluate(self, features):
+        model: MLPClassifier = torch.load("mlp_onelayer_model.mdl",weights_only=False)
+        model.eval()
+        x = torch.tensor([features], dtype=torch.float32)
+        with torch.no_grad():
+            x = x.to("cpu")
+            logits = model(x)
+            #_, preds = model(x)
+            #preds = (preds > 0.5).float()
+            preds = torch.argmax(logits, dim=1)
+            # Gives value within preds tensor
+            print(preds.item())
+            return preds.item()
+        
+    def no_btn_clicked(self):
+        self.no_button = 1
+
+    def yes_btn_clicked(self):
+        self.yes_button = 1
+
+    def score(self,features):
+        correct = self.ml_evaluate(features)
+        # If user clicks yes or no, if there geuss matches correct, give them a point
+        # Will add a score page as well displaying after each
+        if self.no_button == 1 and correct == 0:
+            self.score += 1
+            self.no_button = 0
+        elif self.yes_button == 1 and correct == 1:
+            self.score += 1
+            self.yes_button = 0
 
     # Container for whole page - set up right amount of columns and rows for titles
     # Authors, rules label, rules text box, and start button, with background image
@@ -91,9 +130,6 @@ class MyApp(tk.Frame):
         start_btn = tk.Button(self.page_container, text="Start", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
         start_btn.grid(row=4,column=1)
 
-    # Will have new background (or same image) with some image of a character, textbox with there story
-    # survive or not buttons, next button. Each survive/not will run the model, use placeholder for now.
-
     # This page black with textbox of hints to aid users in geussing.
     def hint_page(self):
         self.page_container = tk.Frame(
@@ -146,7 +182,8 @@ class MyApp(tk.Frame):
 
         # Didn't Survive - PassengerId = 1, info from dataset + made up details on top
         # related to the dataset info
-        # Will store an array in here to and run it through dataset later
+        # Copy and pasted feature vector for this passenger
+        features = [0,3,0,22.000000,1,0,7.2500,0,0,0,0,0,0,0,0,1,0,0,1]
         story = """
         Story 1:
         Hi, I'm Mr. Owen Harris Braund. I heard about the Titanic all over the news
@@ -171,10 +208,14 @@ class MyApp(tk.Frame):
 
         # Here needs to connect to the model - must create functions storing user input 
         # yes = 1, no = 0, if yes_btn.click() or something like that
-        no_btn = tk.Button(self.page_container, text="No", font=("Helvetica", 20), fg="white", bg="#7A0A0A")
+        no_btn = tk.Button(self.page_container, text="No", font=("Helvetica", 20), fg="white", bg="#7A0A0A",command=self.no_btn_clicked)
         no_btn.grid(row=2,column=1,sticky="s")
-        yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a")
+        yes_btn = tk.Button(self.page_container, text="Yes", font=("Helvetica", 20), fg="white", bg="#0b711a",command=self.yes_btn_clicked)
         yes_btn.grid(row=2,column=2,sticky="s")
+
+        # Evaluates users score checking with ML model
+        self.score(features)
+        
 
         next_btn = tk.Button(self.page_container, text="Next", font=("Helvetica", 20), fg="white", bg="#217fdd",command=change_page)
         next_btn.grid(row=3,column=2,sticky="se")
